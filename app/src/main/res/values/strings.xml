@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">GitHubAPI-ALC</string>
+
+    <string name="sample_username">Olayinka_Peter</string>
+    <string name="sample_html_url">https://github.com/OlayinkaPeter</string>
+    <string name="showing_results">Showing Github users search results for location:Lagos and language:Java</string>
+    <string name="user_image">user_image</string>
+    <string name="location">Lagos</string>
+    <string name="language">Java developer</string>
+    <string name="score">Score: </string>
+    <string name="share_text">Share</string>
+    <string name="title_activity_single_user">SingleUserActivity</string>
+</resources>
