@@ -1,7 +1,7 @@
 # ALC_Challenge
 Andela's ALC Intermediate Challenge - Solution (GitLag)
 
-An Android app to retrieve a list of Java Developers in Lagos using the [Github Search API](https://developer.github.com/v3/search/#search-users)
+Quest: An Android app to retrieve a list of Java Developers in Lagos using the [Github Search API](https://developer.github.com/v3/search/#search-users), and to be able to share their Github profiles.
   
 # Screenshots
 
