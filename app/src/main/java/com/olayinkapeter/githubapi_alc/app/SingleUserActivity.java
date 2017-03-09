@@ -115,7 +115,7 @@ public class SingleUserActivity extends AppCompatActivity {
                     openBrowser(developerHTMLURL);
                 }
                 else {
-                    Toast.makeText(SingleUserActivity.this, "Sorry. Try refreshing.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SingleUserActivity.this, "Try refreshing.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -127,7 +127,7 @@ public class SingleUserActivity extends AppCompatActivity {
                     openBrowser(repoURL);
                 }
                 else {
-                    Toast.makeText(SingleUserActivity.this, "Sorry. Try refreshing.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SingleUserActivity.this, "Try refreshing.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
