@@ -4,5 +4,6 @@
     <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#03A9F4</color>
 
+    <color name="colorTransparent">#00f8fafa</color>
     <color name="bg_circle_default">#555555</color>
 </resources>

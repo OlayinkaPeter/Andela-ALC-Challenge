@@ -1,12 +1,17 @@
 <resources>
-    <string name="app_name">GitHubAPI-ALC</string>
+    <string name="app_name">ALC</string>
 
-    <string name="sample_username">Olayinka_Peter</string>
-    <string name="sample_html_url">https://github.com/OlayinkaPeter</string>
+    <string name="sample_username">Username</string>
+    <string name="sample_html_url">URL</string>
     <string name="showing_results">Showing Github users search results for location:Lagos and language:Java</string>
     <string name="user_image">user_image</string>
-    <string name="location">Lagos</string>
-    <string name="language">Java developer</string>
+    <string name="location">Location</string>
+    <string name="language">Language</string>
+    <string name="no_connection">No Connection</string>
+    <string name="retry">Retry</string>
+    <string name="most_popular_repo">MOST POPULAR REPO</string>
+    <string name="repo_name">Name of Repo</string>
+    <string name="repo_url">Repo URL</string>
     <string name="score">Score: </string>
     <string name="share_text">Share</string>
     <string name="title_activity_single_user">SingleUserActivity</string>

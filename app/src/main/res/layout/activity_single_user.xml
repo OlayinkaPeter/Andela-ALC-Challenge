@@ -12,28 +12,32 @@
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:background="?attr/colorPrimary"
+        android:fitsSystemWindows="true"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/collapsing_toolbar_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <ImageView
                 android:id="@+id/bg_image"
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
+                android:layout_height="220dp"
                 android:alpha="0.2"
+                android:fitsSystemWindows="true"
                 android:scaleType="centerCrop"
-                android:src="@drawable/github" />
+                android:src="@drawable/github"
+                app:layout_collapseMode="parallax" />
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
                 app:popupTheme="@style/AppTheme.PopupOverlay" />
 
         </android.support.design.widget.CollapsingToolbarLayout>
@@ -45,46 +49,55 @@
         android:layout_width="140dp"
         android:layout_height="140dp"
         android:layout_margin="@dimen/fab_margin"
-        android:src="@drawable/man"
         app:layout_anchor="@id/appBarLayout"
         app:layout_anchorGravity="bottom|center" />
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:fillViewport="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="70dp"
-            android:padding="16dp"
-            android:orientation="vertical"
-            android:gravity="center|top">
+            android:layout_height="wrap_content"
+            android:gravity="center|top"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/user_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="24sp"
+                android:layout_marginTop="75dp"
                 android:padding="5dp"
-                android:textColor="@color/colorPrimary"/>
+                android:text="@string/sample_username"
+                android:textColor="@color/colorPrimary"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/html_url"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:text="@string/sample_html_url"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/colorAccent"
+                android:textSize="18sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:orientation="horizontal"
-                android:gravity="center">
+                android:padding="16dp">
 
                 <TextView
                     android:id="@+id/language"
-                    android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/language"
+                    android:layout_weight="1"
                     android:textAlignment="center"
-                    android:textSize="20sp"/>
+                    android:textSize="20sp" />
 
                 <View
                     android:layout_width="0.8dp"
@@ -93,14 +106,13 @@
 
                 <TextView
                     android:id="@+id/location"
-                    android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/location"
-                    android:textSize="20sp"
-                    android:paddingLeft="12dp"
+                    android:layout_weight="1"
+                    android:drawableLeft="@drawable/ic_place"
                     android:drawableStart="@drawable/ic_place"
-                    android:drawableLeft="@drawable/ic_place"/>
+                    android:paddingLeft="12dp"
+                    android:textSize="20sp" />
 
                 <View
                     android:layout_width="0.8dp"
@@ -109,44 +121,138 @@
 
                 <TextView
                     android:id="@+id/score"
-                    android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/score"
+                    android:layout_weight="1"
+                    android:padding="4dp"
                     android:textAlignment="center"
-                    android:textSize="20sp"
-                    android:padding="4dp"/>
+                    android:textSize="20sp" />
             </LinearLayout>
-
-            <TextView
-                android:id="@+id/html_url"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="4dp"
-                android:textColor="@color/colorAccent"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textSize="18sp" />
 
             <Button
                 android:id="@+id/share_button"
                 android:layout_width="130dp"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="5dp"
                 android:background="@drawable/bg_share"
+                android:drawableStart="@drawable/ic_share"
+                android:drawableLeft="@drawable/ic_share"
+                android:paddingLeft="10dp"
                 android:text="@string/share_text"
                 android:textColor="#ffffff"
-                android:textSize="20sp"
-                android:layout_margin="24dp"
-                android:paddingLeft="10dp"
-                android:drawableLeft="@drawable/ic_share"/>
-        </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+                android:textSize="20sp" />
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:visibility="gone" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#e1e1e1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:text="@string/most_popular_repo"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="20sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/repo_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/repo_name"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/repo_url"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/repo_url"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="18sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:padding="16dp">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:src="@drawable/ic_lang" />
+
+                            <TextView
+                                android:id="@+id/repo_language"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:textSize="20sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:src="@drawable/ic_star" />
+
+                            <TextView
+                                android:id="@+id/repo_stargazers"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:textSize="20sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:src="@drawable/fork" />
+
+                            <TextView
+                                android:id="@+id/repo_forks"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAlignment="center"
+                                android:textSize="20sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
 
 </android.support.design.widget.CoordinatorLayout>
