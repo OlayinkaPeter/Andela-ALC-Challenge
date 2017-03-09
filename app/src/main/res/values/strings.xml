@@ -3,7 +3,6 @@
 
     <string name="sample_username">Username</string>
     <string name="sample_html_url">URL</string>
-    <string name="showing_results">Showing Github users search results for location:Lagos and language:Java</string>
     <string name="user_image">user_image</string>
     <string name="location">Location</string>
     <string name="language">Language</string>
@@ -14,5 +13,6 @@
     <string name="repo_url">Repo URL</string>
     <string name="score">Score: </string>
     <string name="share_text">Share</string>
+    <string name="action_share">Share</string>
     <string name="title_activity_single_user">SingleUserActivity</string>
 </resources>
