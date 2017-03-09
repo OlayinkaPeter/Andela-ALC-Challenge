@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ALC</string>
+    <string name="app_name">GitLag-ALC</string>
 
     <string name="sample_username">Username</string>
     <string name="sample_html_url">URL</string>
