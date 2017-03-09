@@ -104,7 +104,6 @@ public class SingleUserActivity extends AppCompatActivity {
         urlQueryParam = developerUserName;
 
         makeGitHubJsonSingleUserRequest(urlJsonObj + urlQueryParam);
-        makeGitHubJsonPopularRepoRequest(urlJsonRepoObj + urlQueryParam);
         applyDeveloperImage(developerImageURL);
         applyDeveloperImageBG(developerImageURL);
 
@@ -165,12 +164,15 @@ public class SingleUserActivity extends AppCompatActivity {
                     setUnderlinedText(developerLocationText, developerLocation);
                     developerScoreText.setText(developerScore);
 
+                    makeGitHubJsonPopularRepoRequest(urlJsonRepoObj + urlQueryParam);
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Toast.makeText(SingleUserActivity.this,
                             "Error: " + e.getMessage(),
                             Toast.LENGTH_LONG).show();
                 }
+                hidepDialog();
             }
         }, new Response.ErrorListener() {
 
@@ -180,6 +182,7 @@ public class SingleUserActivity extends AppCompatActivity {
                 Toast.makeText(SingleUserActivity.this,
                         error.getMessage(), Toast.LENGTH_SHORT).show();
                 // hide the progress dialog
+                hidepDialog();
             }
         });
 
@@ -218,7 +221,6 @@ public class SingleUserActivity extends AppCompatActivity {
                             "Error: " + e.getMessage(),
                             Toast.LENGTH_LONG).show();
                 }
-                hidepDialog();
             }
         }, new Response.ErrorListener() {
 
@@ -227,8 +229,6 @@ public class SingleUserActivity extends AppCompatActivity {
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
                 Toast.makeText(SingleUserActivity.this,
                         error.getMessage(), Toast.LENGTH_SHORT).show();
-                // hide the progress dialog
-                hidepDialog();
             }
         });
 
@@ -279,8 +279,7 @@ public class SingleUserActivity extends AppCompatActivity {
     }
 
     public void showLocation(String locationValue) {
-        Intent intent = null, chooser = null;
-        intent = new Intent(android.content.Intent.ACTION_VIEW);
+        Intent intent = new Intent(android.content.Intent.ACTION_VIEW);
         String map = "http://maps.google.co.in/maps?q=" + locationValue;
         intent.setData(Uri.parse(map));
         intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
