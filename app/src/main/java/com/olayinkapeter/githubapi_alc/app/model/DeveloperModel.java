@@ -5,16 +5,17 @@ package com.olayinkapeter.githubapi_alc.app.model;
  */
 
 public class DeveloperModel {
-    private String developerID, developerUserName, developerImageURL, developerHTMLURL;
+    private int developerID;
+    private String developerUserName, developerImageURL, developerHTMLURL;
 
-    public DeveloperModel(String developerID, String developerUserName, String developerImageURL, String developerHTMLURL) {
+    public DeveloperModel(int developerID, String developerUserName, String developerImageURL, String developerHTMLURL) {
         this.developerID = developerID;
         this.developerUserName = developerUserName;
         this.developerImageURL = developerImageURL;
         this.developerHTMLURL = developerHTMLURL;
     }
 
-    public String getDeveloperID() {
+    public int getDeveloperID() {
         return developerID;
     }
 
@@ -30,7 +31,7 @@ public class DeveloperModel {
         return developerHTMLURL;
     }
 
-    public void setDeveloperID(String developerID) {
+    public void setDeveloperID(int developerID) {
         this.developerID = developerID;
     }
 

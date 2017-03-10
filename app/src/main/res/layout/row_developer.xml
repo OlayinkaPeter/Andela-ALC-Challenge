@@ -1,24 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:clickable="true"
     android:foreground="?attr/selectableItemBackground"
-    android:gravity="center"
-    android:orientation="horizontal"
-    android:padding="16dp">
+    android:gravity="center">
 
-    <ImageView
-        android:id="@+id/image"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
-        android:contentDescription="@string/user_image" />
+    <RelativeLayout
+        android:id="@+id/icon_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:padding="16dp"
+        android:foreground="?attr/selectableItemBackground"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/icon_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fillAfter="false"
+            android:fillEnabled="false">
+
+            <ImageView
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:src="@drawable/bg_circle" />
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_done" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/icon_front"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fillAfter="false"
+            android:fillEnabled="false">
+
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:contentDescription="@string/user_image" />
+        </RelativeLayout>
+
+    </RelativeLayout>
 
     <LinearLayout
+        android:id="@+id/row_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
+        android:layout_height="88dp"
+        android:clickable="true"
+        android:padding="16dp"
+        android:paddingStart="95dp"
+        android:paddingLeft="95dp"
+        android:foreground="?attr/selectableItemBackground"
         android:orientation="vertical">
 
         <TextView
@@ -39,8 +79,7 @@
             android:textColor="#8f8d8d"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textSize="14sp" />
-
     </LinearLayout>
 
 
-</LinearLayout>
+</RelativeLayout>

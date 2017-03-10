@@ -7,12 +7,15 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.view.ActionMode;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -39,7 +42,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements DeveloperAdapter.DeveloperAdapterListener{
     private String urlJsonObj = EndPoints.BASE_USER_URL + "?q=";
     private String urlQueryParam = "language:java+location:lagos";
     private static String TAG = MainActivity.class.getSimpleName();
@@ -49,11 +52,16 @@ public class MainActivity extends AppCompatActivity {
 
     // Progress dialog
     private ProgressDialog pDialog;
-    private String developerID, developerUserName, developerImageURL, developerHTMLURL;
+    private int developerID;
+    private String developerUserName, developerImageURL, developerHTMLURL;
 
     private List<DeveloperModel> developerList = new ArrayList<>();
     private RecyclerView mRecyclerView;
     private DeveloperAdapter mAdapter;
+    private ActionModeCallback actionModeCallback;
+    private ActionMode actionMode;
+
+    String shareMsg = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,13 +80,15 @@ public class MainActivity extends AppCompatActivity {
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
-        mAdapter = new DeveloperAdapter(developerList, this);
+        mAdapter = new DeveloperAdapter(developerList, this, this);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.addItemDecoration(new DividerItemDecor(this, LinearLayoutManager.VERTICAL));
 
         mRecyclerView.setAdapter(mAdapter);
+
+        actionModeCallback = new ActionModeCallback();
 
         RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();
         itemAnimator.setAddDuration(1000);
@@ -90,13 +100,7 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(this, mRecyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                DeveloperModel developerModel = developerList.get(position);
-                Intent intent = new Intent(MainActivity.this, SingleUserActivity.class);
-                intent.putExtra("d_id", developerModel.getDeveloperID());
-                intent.putExtra("d_username", developerModel.getDeveloperUserName());
-                intent.putExtra("d_imageURL", developerModel.getDeveloperImageURL());
-                intent.putExtra("d_HTML_URL", developerModel.getDeveloperHTMLURL());
-                startActivity(intent);
+
             }
 
             @Override
@@ -121,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-                        developerID = jsonObject.getString("id");
+                        developerID = jsonObject.getInt("id");
                         developerUserName = jsonObject.getString("login");
                         developerImageURL = jsonObject.getString("avatar_url");
                         developerHTMLURL = jsonObject.getString("html_url");
@@ -206,5 +210,141 @@ public class MainActivity extends AppCompatActivity {
     private void hidepDialog() {
         if (pDialog.isShowing())
             pDialog.dismiss();
+    }
+
+    @Override
+    public void onIconClicked(int position) {
+        if (actionMode == null) {
+            actionMode = startSupportActionMode(actionModeCallback);
+        }
+
+        toggleSelection(position);
+    }
+
+    @Override
+    public void onDeveloperRowClicked(int position) {
+// verify whether action mode is enabled or not
+        // if enabled, change the row state to activated
+        if (mAdapter.getSelectedItemCount() > 0) {
+            enableActionMode(position);
+        } else {
+            DeveloperModel developerModel = developerList.get(position);
+            Intent intent = new Intent(MainActivity.this, SingleUserActivity.class);
+            intent.putExtra("d_id", developerModel.getDeveloperID());
+            intent.putExtra("d_username", developerModel.getDeveloperUserName());
+            intent.putExtra("d_imageURL", developerModel.getDeveloperImageURL());
+            intent.putExtra("d_HTML_URL", developerModel.getDeveloperHTMLURL());
+            startActivity(intent);
+            mAdapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void onRowLongClicked(int position) {
+        // long press is performed, enable action mode
+        enableActionMode(position);
+    }
+
+    private void enableActionMode(int position) {
+        if (actionMode == null) {
+            actionMode = startSupportActionMode(actionModeCallback);
+        }
+        toggleSelection(position);
+    }
+
+    private void toggleSelection(int position) {
+        mAdapter.toggleSelection(position);
+        int count = mAdapter.getSelectedItemCount();
+
+        if (count == 0) {
+            actionMode.finish();
+        } else {
+            actionMode.setTitle(String.valueOf(count));
+            actionMode.invalidate();
+        }
+    }
+
+
+    private class ActionModeCallback implements ActionMode.Callback {
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            mode.getMenuInflater().inflate(R.menu.menu_action_mode, menu);
+
+            return true;
+        }
+
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            return false;
+        }
+
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.action_share:
+                    // share all the selected developers
+                    arrangeDevelopersSharing();
+                    mode.finish();
+                    return true;
+
+                default:
+                    return false;
+            }
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+            mAdapter.clearSelections();
+
+            actionMode = null;
+            mRecyclerView.post(new Runnable() {
+                @Override
+                public void run() {
+                    mAdapter.resetAnimationIndex();
+                    // mAdapter.notifyDataSetChanged();
+                }
+            });
+        }
+    }
+
+    // share multiple developers from recycler view
+    private void arrangeDevelopersSharing() {
+        mAdapter.resetAnimationIndex();
+        List<Integer> selectedItemPositions =
+                mAdapter.getSelectedItems();
+        for (int i = selectedItemPositions.size() - 1; i >= 0; i--) {
+            DeveloperModel developerModel = developerList.get(selectedItemPositions.get(i));
+
+            shareMsg += " ; @" + developerModel.getDeveloperUserName() + ", " + developerModel.getDeveloperHTMLURL();
+        }
+        shareDevelopers("Check out these " + selectedItemPositions.size() + " awesome developers" + shareMsg);
+        mAdapter.notifyDataSetChanged();
+
+        shareMsg = "";
+    }
+
+    private void shareDevelopers(String shareMsg) {
+        Intent shareIntent = new Intent();
+        shareIntent.setAction(Intent.ACTION_SEND);
+        shareIntent.setType("text/plain");
+        shareIntent.putExtra(Intent.EXTRA_TEXT, shareMsg);
+        startActivity(shareIntent);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        return super.onOptionsItemSelected(item);
     }
 }

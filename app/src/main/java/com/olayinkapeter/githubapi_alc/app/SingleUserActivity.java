@@ -134,7 +134,7 @@ public class SingleUserActivity extends AppCompatActivity {
         shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                shareUser("Check out this awesome developer @" + developerUserName + ", " + developerHTMLURL + ".");
+                shareDeveloper("Check out this awesome developer @" + developerUserName + ", " + developerHTMLURL + ".");
             }
         });
     }
@@ -172,7 +172,6 @@ public class SingleUserActivity extends AppCompatActivity {
                             "Error: " + e.getMessage(),
                             Toast.LENGTH_LONG).show();
                 }
-                hidepDialog();
             }
         }, new Response.ErrorListener() {
 
@@ -181,8 +180,6 @@ public class SingleUserActivity extends AppCompatActivity {
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
                 Toast.makeText(SingleUserActivity.this,
                         error.getMessage(), Toast.LENGTH_SHORT).show();
-                // hide the progress dialog
-                hidepDialog();
             }
         });
 
@@ -221,6 +218,7 @@ public class SingleUserActivity extends AppCompatActivity {
                             "Error: " + e.getMessage(),
                             Toast.LENGTH_LONG).show();
                 }
+                hidepDialog();
             }
         }, new Response.ErrorListener() {
 
@@ -229,6 +227,8 @@ public class SingleUserActivity extends AppCompatActivity {
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
                 Toast.makeText(SingleUserActivity.this,
                         error.getMessage(), Toast.LENGTH_SHORT).show();
+                // hide the progress dialog
+                hidepDialog();
             }
         });
 
@@ -270,7 +270,7 @@ public class SingleUserActivity extends AppCompatActivity {
         startActivity(browserIntent);
     }
 
-    public void shareUser(String shareMsg) {
+    public void shareDeveloper(String shareMsg) {
         Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND);
         shareIntent.setType("text/plain");
