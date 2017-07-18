@@ -18,6 +18,5 @@ In any case one needs to share multiple selected developers at a time...
 <img src="https://github.com/OlayinkaPeter/Andela-ALC-Challenge/blob/master/screenshots/Screenshot_shared_whatsapp.png" width="30%">
 </p>
 
-# Confession
-I had fun!
+
 <p style="font-size: 4px">All Glory be unto GOD</p>
